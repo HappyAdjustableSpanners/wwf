@@ -1,0 +1,16 @@
+﻿
+@{
+	ViewData["Title"] = "SignatureControl";
+}
+
+<h2>SignatureControl</h2>
+
+<div id="signature"></div>
+
+<script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        // INIT JSignature Control and inject into DIV
+        $("#signature").jSignature({ width: 650, height: 150 });
+    });
+</script>

@@ -1,0 +1,49 @@
+﻿@model WWF.Models.FormData
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h2>Contact and Organisation</h2>
+@using (Html.BeginForm("Submit", "Form", FormMethod.Post, new { id = "form" }))
+{
+	@Html.LabelFor(m => m.ContactNumber)<br />
+	@Html.TextBoxFor(m => m.ContactNumber)<br />
+	@Html.ValidationMessageFor(m => m.ContactNumber)<br />
+
+	@Html.LabelFor(m => m.Title)<br />
+	@Html.DropDownListFor(m => m.Title, new SelectList(Enum.GetValues(typeof(WWF.Models.Helper.Title))), "Select Title"); <br />
+
+	@Html.LabelFor(m => m.Forenames)<br />
+	@Html.TextBoxFor(m => m.Forenames)<br />
+	@Html.ValidationMessageFor(m => m.Forenames)<br />
+
+	@Html.LabelFor(m => m.Initials)<br />
+	@Html.TextBoxFor(m => m.Initials)<br />
+	@Html.ValidationMessageFor(m => m.Initials)<br />
+
+	@Html.LabelFor(m => m.Surname)<br />
+	@Html.TextBoxFor(m => m.Surname)<br />
+	@Html.ValidationMessageFor(m => m.Surname)<br />
+
+	@Html.LabelFor(m => m.Honorifics)<br />
+	@Html.TextBoxFor(m => m.Honorifics)<br />
+	@Html.ValidationMessageFor(m => m.Honorifics)<br />
+
+	@Html.LabelFor(m => m.Initials)<br />
+	@Html.TextBoxFor(m => m.Initials)<br />
+	@Html.ValidationMessageFor(m => m.Initials)<br />
+
+	@Html.EditorFor(m => m.BirthDate)
+	@Html.ValidationMessageFor(m => m.BirthDate)<br />
+
+	<partial name="Partials/SignatureControl" />
+	@Html.HiddenFor(m => m.Signature, new { id = "hiddenSigData" })<br />
+	@Html.ValidationMessageFor(m => m.Signature)<br />
+
+	<input type="submit" value="Submit" />
+}
+
+
+
+
+

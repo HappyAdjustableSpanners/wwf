@@ -8,6 +8,9 @@ namespace WWF.Models
 {
     public class FormData
     {
+        public int FormDataId { get; set; }
+
+
         [Display(Name = "Contact Number"), StringLength(255, ErrorMessage = "The phone number is too long")]
         public string ContactNumber { get; set; }
 

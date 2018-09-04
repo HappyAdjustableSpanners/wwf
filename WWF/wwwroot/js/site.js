@@ -12,7 +12,32 @@ $("#form").submit(function () {
 	
 	$('#hiddenSigData').val(sigData);
 	console.log('jSignature saving signature');
-	
-
 
 });
+
+
+$("#show-add").click(function () {
+	$('#addressSelectBox')
+		.find('option')
+		.remove()
+	var location = $('#Address').val();
+	getAddress(location);
+});
+
+
+function getAddress(location) {
+	var cmd = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyCdVwcRvEX2l5d-NY92uVd8Pvo5Uy_ZKCU";
+	$.getJSON(cmd, function(data, textStatus){
+		$.each(data.results, function (key, val) {
+			// add to drop down
+			var addressSelectBox = document.getElementById("addressSelectBox");
+			addressSelectBox.options[addressSelectBox.options.length] = new Option(val.formatted_address);
+		});
+	});
+}
+
+$('#addressSelectBox').on('change', function () {
+	alert(this.value);
+});
+
+

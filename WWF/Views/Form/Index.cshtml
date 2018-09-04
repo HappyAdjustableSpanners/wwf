@@ -33,17 +33,27 @@
 	@Html.TextBoxFor(m => m.Initials)<br />
 	@Html.ValidationMessageFor(m => m.Initials)<br />
 
-	@Html.EditorFor(m => m.BirthDate)
+	@Html.LabelFor(m => m.BirthDate)<br />
+	@Html.EditorFor(m => m.BirthDate)<br />
 	@Html.ValidationMessageFor(m => m.BirthDate)<br />
+
+	<label>PostCode Lookup</label><br/>
+	<input type="text" value="Enter postcode" id="addressSelectBox"/>
+	<input type="button" name="show" value="show address" id="show-add" /> <br/>
+	<select id="addressSelectBox"></select>
+	
+
 
 	<partial name="Partials/SignatureControl" />
 	@Html.HiddenFor(m => m.Signature, new { id = "hiddenSigData" })<br />
 	@Html.ValidationMessageFor(m => m.Signature)<br />
 
+
+
 	<input type="submit" value="Submit" />
 }
 
-
+@Html.ActionLink("Save To CSV and send via SFTP", "SaveFormsToCSV", "Form")
 
 
 

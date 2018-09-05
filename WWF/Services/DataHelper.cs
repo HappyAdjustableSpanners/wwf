@@ -9,6 +9,8 @@ using WWF.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using Renci.SshNet;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace WWF.Services
 {
@@ -53,6 +55,18 @@ namespace WWF.Services
             }
         }
 
-
+        public static string SaveSignature(int id, string signatureBase64)
+        {
+            // save signature
+            string filename = id + "_signature.png";
+            string saveDir = "Storage\\" + filename;
+            string base64 = signatureBase64.Split(',')[1];
+            byte[] bytes = Convert.FromBase64String(base64);
+            using (Image image = Image.FromStream(new MemoryStream(bytes)))
+            {
+                image.Save(saveDir, ImageFormat.Jpeg);  // Or Png
+            }
+            return saveDir;
+        }
     }
 }

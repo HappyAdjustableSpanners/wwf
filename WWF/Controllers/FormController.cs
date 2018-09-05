@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WWF.Models;
 using WWF.Services;
+using System.Drawing;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace WWF.Controllers
 {
@@ -28,14 +27,13 @@ namespace WWF.Controllers
         [HttpPost]
         public ActionResult Submit(Models.FormData formData)
         {
-
+            
             // extra validation
             if(!ModelState.IsValid)
             {
                 return View("Index");
             }
 
-            
 
             // generate external reference from [Agency Code][Batch Number]-[Sequence Number]-[Date]-[Gift Suffix]
 
@@ -43,9 +41,13 @@ namespace WWF.Controllers
 
             // generate source, a 9 digit code relating to the campaign that elicited the response
 
-            
+
 
             _context.Add(formData);
+            var id = formData;
+            _context.SaveChanges();
+            formData.Signature = DataHelper.SaveSignature(formData.FormDataId, formData.Signature);
+            _context.Update(formData);
             _context.SaveChanges();
 
             return Ok();

@@ -24,11 +24,29 @@ namespace WWF.Services
         public static string EFListToCSV(List<FormData> list)
         {
             var sb = new StringBuilder();
-   
-            sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", "Contact Number", "Title", "Forenames", "Initials", "Surname", "Honorifics", "Birthdate", "Signature", Environment.NewLine);
-            foreach (var item in list)
+
+            //sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", "Contact Number", "Title", "Forenames", "Initials", "Surname", "Honorifics", "Birthdate", "Signature", Environment.NewLine);
+
+            FormData exampleForm = list[0];
+            PropertyInfo[] properties = exampleForm.GetType().GetProperties();
+            foreach (PropertyInfo prop in properties)
             {
-                sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", item.ContactNumber, item.Title, item.Forenames, item.Initials, item.Surname, item.Honorifics, item.BirthDate.ToShortDateString(), item.Signature, Environment.NewLine);
+                sb.Append(prop.Name);
+                sb.Append(',');
+            }
+            sb.Append(Environment.NewLine);
+
+            foreach (var form in list)
+            {
+                // for each attribute in form
+                foreach(PropertyInfo prop in properties)
+                {
+                    sb.Append(prop.GetValue(form));
+                    sb.Append(',');
+                    
+                }
+                sb.Append(Environment.NewLine);
+                //sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7}", item.ContactNumber, item.Title, item.Forenames, item.Initials, item.Surname, item.Honorifics, item.BirthDate.ToShortDateString(), item.Signature, Environment.NewLine);
             }
 
             return sb.ToString();
@@ -59,7 +77,7 @@ namespace WWF.Services
         {
             // save signature
             string filename = id + "_signature.png";
-            string saveDir = "Storage\\" + filename;
+            string saveDir = "Storage\\csvFiles" + filename;
             string base64 = signatureBase64.Split(',')[1];
             byte[] bytes = Convert.FromBase64String(base64);
             using (Image image = Image.FromStream(new MemoryStream(bytes)))

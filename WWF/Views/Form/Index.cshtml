@@ -6,50 +6,115 @@
 <h2>Contact and Organisation</h2>
 @using (Html.BeginForm("Submit", "Form", FormMethod.Post, new { id = "form" }))
 {
-	@Html.LabelFor(m => m.ContactNumber)<br />
-	@Html.TextBoxFor(m => m.ContactNumber)<br />
-	@Html.ValidationMessageFor(m => m.ContactNumber)<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.ContactNumber)
+		@Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.ContactNumber)
+	</div>
 
-	@Html.LabelFor(m => m.Title)<br />
-	@Html.DropDownListFor(m => m.Title, new SelectList(Enum.GetValues(typeof(WWF.Models.Helper.Title))), "Select Title"); <br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Title)
+		@Html.DropDownListFor(m => m.Title, new SelectList(Enum.GetValues(typeof(WWF.Models.Helper.Title))), "Select Title", new { @class = "form-control" })
+	</div>
 
-	@Html.LabelFor(m => m.Forenames)<br />
-	@Html.TextBoxFor(m => m.Forenames)<br />
-	@Html.ValidationMessageFor(m => m.Forenames)<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Forenames)
+		@Html.TextBoxFor(m => m.Forenames, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Forenames)
+	</div>
 
-	@Html.LabelFor(m => m.Initials)<br />
-	@Html.TextBoxFor(m => m.Initials)<br />
-	@Html.ValidationMessageFor(m => m.Initials)<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Initials)
+		@Html.TextBoxFor(m => m.Initials, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Initials)
+	</div>
 
-	@Html.LabelFor(m => m.Surname)<br />
-	@Html.TextBoxFor(m => m.Surname)<br />
-	@Html.ValidationMessageFor(m => m.Surname)<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Surname, new { @class = "required" })
+		@Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Surname)
+	</div>
 
-	@Html.LabelFor(m => m.Honorifics)<br />
-	@Html.TextBoxFor(m => m.Honorifics)<br />
-	@Html.ValidationMessageFor(m => m.Honorifics)<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Honorifics)
+		@Html.TextBoxFor(m => m.Honorifics, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Honorifics)
+	</div>
 
-	@Html.LabelFor(m => m.BirthDate)<br />
-	@Html.EditorFor(m => m.BirthDate)<br />
-	@Html.ValidationMessageFor(m => m.BirthDate)<br />
+	<div class="margin-bottom-15">
+		@Html.LabelFor(m => m.BirthDate)
+		@Html.EditorFor(m => m.BirthDate._birthDate, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(m => m.BirthDate)
+	</div>
 
-	<label>PostCode Lookup</label><br/>
-	<input type="text" value="Enter postcode" id="addressSelectBox"/>
-	<input type="button" name="show" value="show address" id="show-add" /> <br/>
-	<select id="addressSelectBox"></select>
-	
+	<div class="form-group">
+		<label>PostCode Lookup</label>
+		<input type="text" class="form-control" placeholder="Enter postcode" id="addressInput" />
+		<select id="addressSelectBox" class="form-control"></select>
+	</div>
 
+	<div class="form-group">
+		@Html.LabelFor(m => m.AddressLine1, new { @class = "required" })
+		@Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.AddressLine1)
+	</div>
 
-	<partial name="Partials/SignatureControl" />
-	@Html.HiddenFor(m => m.Signature, new { id = "hiddenSigData" })<br />
-	@Html.ValidationMessageFor(m => m.Signature)<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.AddressLine2)
+		@Html.TextBoxFor(m => m.AddressLine2, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.AddressLine2)
+	</div>
 
+	<div class="form-group">
+		@Html.LabelFor(m => m.AddressLine3)
+		@Html.TextBoxFor(m => m.AddressLine3, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.AddressLine3)
+	</div>
 
+	<div class="form-group">
+		@Html.LabelFor(m => m.AddressLine4)
+		@Html.TextBoxFor(m => m.AddressLine4, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.AddressLine4)
+	</div>
 
-	<input type="submit" value="Submit" />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Town, new { @class = "required" })
+		@Html.TextBoxFor(m => m.Town, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Town)
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.County)
+		@Html.TextBoxFor(m => m.County, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.County)
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Postcode)
+		@Html.TextBoxFor(m => m.Postcode, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.Postcode)
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.CountryCode)
+		@Html.TextBoxFor(m => m.CountryCode, new { @class = "form-control" })
+		@Html.ValidationMessageFor(m => m.CountryCode)
+	</div>
+
+	<div class="form-group">
+		<partial name="Partials/SignatureControl" />
+		@Html.HiddenFor(m => m.Signature, new { id = "hiddenSigData" })
+		@Html.ValidationMessageFor(m => m.Signature)
+	</div>
+
+	<div class="form-group">
+		<input type="submit" class="btn btn-primary" value="Submit" />
+	</div>
 }
 
-@Html.ActionLink("Save To CSV and send via SFTP", "SaveFormsToCSV", "Form")
+
+@Html.ActionLink("Save To CSV", "SaveFormsToCSV", "Form", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Send via SFTP", "SendSFTP", "Form", null, new { @class = "btn btn-primary" })
 
 
 

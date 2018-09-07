@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WWF.Models.DataTypes;
 
 namespace WWF.Models
 {
@@ -29,10 +30,34 @@ namespace WWF.Models
         [Display(Name = "Honorifics"), StringLength(30)]
         public string Honorifics { get; set; }
 
-        [DataType(DataType.Date)]
+    
         [Display(Name = "Birth Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime BirthDate { get; set; }
+        public Birthdate BirthDate { get; set; }
+
+        [Display(Name = "Address Line 1"), Required, StringLength(35)]
+        public string AddressLine1 { get; set; }
+
+        [Display(Name = "Address Line 2"), StringLength(35)]
+        public string AddressLine2 { get; set; }
+
+        [Display(Name = "Address Line 3"), StringLength(35)]
+        public string AddressLine3 { get; set; }
+
+        [Display(Name = "Address Line 4"), StringLength(35)]
+        public string AddressLine4 { get; set; }
+
+        [Display(Name = "Town"), Required, StringLength(35)]
+        public string Town { get; set; }
+
+        [Display(Name = "County"), StringLength(35)]
+        public string County { get; set; }
+
+        [Display(Name = "Postcode"), StringLength(10)]
+        public string Postcode { get; set; }
+
+        [Display(Name = "Country Code"), StringLength(35)]
+        public string CountryCode { get; set; }
 
         [Required]
         public string Signature { get; set; }

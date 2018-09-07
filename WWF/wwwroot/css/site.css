@@ -35,3 +35,17 @@ body {
         display: none;
     }
 }
+
+.margin-bottom-15 {
+	margin-bottom: 15px;
+}
+
+.required:after {
+	content: " *";
+	font-weight: bold;
+	color: red;
+}
+
+.jSignature {
+	width: 100%;
+}

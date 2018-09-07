@@ -16,13 +16,7 @@ $("#form").submit(function () {
 });
 
 
-$("#show-add").click(function () {
-	$('#addressSelectBox')
-		.find('option')
-		.remove()
-	var location = $('#Address').val();
-	getAddress(location);
-});
+
 
 
 function getAddress(location) {
@@ -32,12 +26,37 @@ function getAddress(location) {
 			// add to drop down
 			var addressSelectBox = document.getElementById("addressSelectBox");
 			addressSelectBox.options[addressSelectBox.options.length] = new Option(val.formatted_address);
+
+			// fill out address lines
+		
+			for (i = 0; i < val.address_components.length; i++)
+			{
+				var type = val.address_components[i].types[0];
+				var name = val.address_components[i].long_name;
+
+				switch (type) {
+					case 'postal_code':
+						$('#Postcode').val(name);
+						break;
+					case 'route':
+						$('#AddressLine1').val(name);
+						break;
+					case 'postal_town':
+						$('#Town').val(name);
+				}
+
+			
+		
+			}
+
+			
 		});
 	});
 }
 
-$('#addressSelectBox').on('change', function () {
-	alert(this.value);
-});
+$('#addressInput').on('change', function () {
+	var location = $('#addressInput').val();
+	getAddress(location);
+}); 
 
 

@@ -64,11 +64,14 @@ namespace WWF.Controllers
 
             string date = year + month + day;
             string AgencyCode = "AB";
-            string fileName = AgencyCode + "-" + date + ".csv";
+            string fileName = "Storage\\csvFiles\\" + AgencyCode + "-" + date + ".csv";
 
-            DataHelper.UploadSFTPFile("C:\\Users\\jonny\\Downloads\\" + fileName);
+            System.IO.File.WriteAllText(fileName, csvValues);
+            System.Threading.Thread.Sleep(1000);
+            DataHelper.UploadSFTPFile(fileName);
 
-            return File(System.Text.Encoding.ASCII.GetBytes(csvValues), "text/csv", fileName);
+            return Ok();
+            //return File(System.Text.Encoding.ASCII.GetBytes(csvValues), "text/csv", fileName);
         }
     }
 }

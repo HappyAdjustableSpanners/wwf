@@ -19,44 +19,98 @@ $("#form").submit(function () {
 
 
 
-function getAddress(location) {
+function UpdateAddressDropDown(location) {
+
+	// get addresses for postcode
 	var cmd = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyCdVwcRvEX2l5d-NY92uVd8Pvo5Uy_ZKCU";
-	$.getJSON(cmd, function(data, textStatus){
-		$.each(data.results, function (key, val) {
-			// add to drop down
-			var addressSelectBox = document.getElementById("addressSelectBox");
-			addressSelectBox.options[addressSelectBox.options.length] = new Option(val.formatted_address);
 
-			// fill out address lines
-		
-			for (i = 0; i < val.address_components.length; i++)
-			{
-				var type = val.address_components[i].types[0];
-				var name = val.address_components[i].long_name;
+	// for each address, populate the drop down
+	$.getJSON(cmd, function (data, textStatus) {
+		$('#addressSelectBox').find('option').remove();
+		var lat = data.results[0].geometry.location.lat;
+		var lng = data.results[0].geometry.location.lng;
+		var cmd = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyCdVwcRvEX2l5d-NY92uVd8Pvo5Uy_ZKCU";
+		$.getJSON(cmd, function (data, textStatus) {
+			$.each(data.results, function (key, val) {
+				// add to drop down
+				var addressSelectBox = document.getElementById("addressSelectBox");
+				addressSelectBox.options[addressSelectBox.options.length] = new Option(val.formatted_address);
 
-				switch (type) {
-					case 'postal_code':
-						$('#Postcode').val(name);
-						break;
-					case 'route':
-						$('#AddressLine1').val(name);
-						break;
-					case 'postal_town':
-						$('#Town').val(name);
+				// add key value pairs to a hidden element, which we can use later to populate the address fields
+				var addressKVPairSelectBox = document.getElementById("addressKVPairSelectBox");
+				var kvpairs = "";
+				for (i = 0; i < val.address_components.length; i++) {		
+					var type = val.address_components[i].types[0];
+					var name = val.address_components[i].long_name;
+					kvpairs += type + ':' + name + ',';
 				}
-
-			
-		
-			}
-
-			
-		});
+				addressKVPairSelectBox.options[addressSelectBox.options.length - 1] = new Option(kvpairs);
+			});
+		});	
 	});
+
+	// init address fields to 1st result
 }
 
-$('#addressInput').on('change', function () {
-	var location = $('#addressInput').val();
-	getAddress(location);
+function PopulateAddressFields(index) {
+	var address = $('#addressKVPairSelectBox')[0].options[index].text;
+
+	// reconstruct data
+	$('#AddressLine1').val("");
+
+
+	var fields = address.split(",");
+
+	// for each field
+	for (var i = 0; i < fields.length; i++)
+	{
+		var type = fields[i].split(':')[0];
+		var name = fields[i].split(':')[1];
+		switch (type)
+		{
+			case "street_number":
+				$('#AddressLine1').val($('#AddressLine1').val() + name + ' ');
+				break;
+			case "route":
+				$('#AddressLine1').val($('#AddressLine1').val() + name);
+				break;
+			case "locality":
+				$('#AddressLine2').val(name);
+				break;
+			case "administrative_area_level_2":
+				$('#AddressLine3').val(name);
+				break;
+			case "administrative_area_level_1":
+				$('#AddressLine4').val(name);
+				break;
+			case "postal_town":
+				$('#Town').val(name);
+				break;
+			case "country":
+				break;
+			case "postal_code":
+				$('#Postcode').val(name);
+				break;
+		}
+	}
+
+}
+
+$('#PostCodeInput').on('change', function () {
+	var location = $('#PostCodeInput').val();
+
+	//populate the address dropdown, and initialise the address fields to the first result
+	UpdateAddressDropDown(location);
 }); 
+
+$('#addressSelectBox').on('change', function () {
+	var location = $('#addressSelectBox').prop('selectedIndex');
+
+	//populate the address dropdown, and initialise the address fields to the first result
+	PopulateAddressFields(location);
+}); 
+
+
+// fill out address lines
 
 

@@ -49,10 +49,13 @@
 
 	<div class="form-group">
 		<label>PostCode Lookup</label>
-		<input type="text" class="form-control" placeholder="Enter postcode" id="addressInput" />
+		<input type="text" class="form-control" placeholder="Enter postcode" id="PostCodeInput" />
 		<select id="addressSelectBox" class="form-control"></select>
 	</div>
 
+	<div class="form-group">
+		<select id="addressKVPairSelectBox" class="form-control"></select>
+	</div>
 	<div class="form-group">
 		@Html.LabelFor(m => m.AddressLine1, new { @class = "required" })
 		@Html.TextBoxFor(m => m.AddressLine1, new { @class = "form-control" })
@@ -110,11 +113,11 @@
 	<div class="form-group">
 		<input type="submit" class="btn btn-primary" value="Submit" />
 	</div>
-}
+	}
 
 
-@Html.ActionLink("Save To CSV", "SaveFormsToCSV", "Form", null, new { @class = "btn btn-primary" })
-@Html.ActionLink("Send via SFTP", "SendSFTP", "Form", null, new { @class = "btn btn-primary" })
+		@Html.ActionLink("Save To CSV", "SaveFormsToCSV", "Form", null, new { @class = "btn btn-primary" })
+		@Html.ActionLink("Send via SFTP", "SendSFTP", "Form", null, new { @class = "btn btn-primary" })
 
 
 
